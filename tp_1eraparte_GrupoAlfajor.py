@@ -6,74 +6,52 @@ def diccionarioPalabras():
     # listado.sort()
     return listado
 
-
 def elegirPalabra(listado):
     palabraSeleccionada = listado[randint(1,len(listado)-1)]
     # print(palabraSeleccionada)
     return palabraSeleccionada
 
-def jugabilidad(palabra):
+palabraElegida= elegirPalabra(diccionarioPalabras())
 
-    palabraAhorcado = palabra.lower()
+def mostrar_simbolo(palabra):
     caracter = "?"
     muestraParcial = len(palabraAhorcado)*caracter
-    print(palabraAhorcado)
+    return muestraParcial
+    
+"""print(mostrar_simbolo(palabraElegida))"""
 
+def jugabilidad(palabra):
 
     contadorAciertos = 0
     contadorErrores = 0
+    caracteresErroneos = ''
+    letraSinInterrogacion = ''
 
-    letras = ""
-
-    print(f"Palabra a adivinar: {muestraParcial}  Aciertos: {contadorAciertos}  Desaciertos: {contadorErrores}")
+    print(f"Palabra a adivinar: {palabra}  Aciertos: {contadorAciertos}  Desaciertos: {contadorErrores}")
+    letra = input("Ingrese una letra: ")
+    
 
     while contadorErrores <= 7:
-
-
-        muestraParcial = ""
-        letra = input("Ingrese una letra (0 o esc salir): ")
-
-        if len(letra)> 1 or not letra.isalpha():
-            print("Ingreso erroneo")
-            letra = input("Ingrese una letra (0 o esc salir): ")
-        elif letra == "0" or letra == "esc":
-            print("has escapado! ")
-            # contadorErrores = 10
-
-        letras += letra
-
-        if letra not in palabraAhorcado:
-            contadorErrores += 1
-            # print(f"contador intentos {contadorErrores}")
-        else:
-            contadorAciertos += 1
-        
-
-        for i in range (len(palabraAhorcado)):
-            if palabraAhorcado[i] in letras:
-                muestraParcial += palabraAhorcado[i]
+        for posicion in range (0,len(palabra)):
+            if letra in palabra:
+                contadorAciertos += 1
+                letraSinInterrogacion = 'r?????'
+                print(f"Muy bien!!! -> {letraSinInterrogacion}  Aciertos: {contadorAciertos}  Desaciertos: {contadorErrores}")
+                letra = input("Ingrese una letra: ")
             else:
-                muestraParcial += caracter
+                contadorErrores +=1       
+                caracteresErroneos += letra 
+                print(f"Lo siento!!! -> {letraSinInterrogacion}  Aciertos: {contadorAciertos}  Desaciertos: {contadorErrores} - {caracteresErroneos}")
+                letra = input("Ingrese una letra: ")
 
-        if letra in muestraParcial:
-            print(f"Muy bien jajaja {muestraParcial} Aciertos: {contadorAciertos} Desaciertos: {contadorErrores} ")
-        else:
-            print(f"Lo siento {muestraParcial} Aciertos: {contadorAciertos} Desaciertos: {contadorErrores} ")
-
-        if muestraParcial == palabraAhorcado:
-            print("HAS GANADO!")
-            contadorErrores = 15
-        
         if contadorErrores == 8:
-            print("PERDISTE")
+            print("Perdiste")
 
-    
     return None
-
 
 def main():
 
-    palabraElegida= elegirPalabra(diccionarioPalabras())
+    
     jugabilidad(palabraElegida)
 
 main()

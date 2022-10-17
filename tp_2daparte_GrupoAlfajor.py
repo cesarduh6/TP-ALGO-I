@@ -1,11 +1,12 @@
 texto_usar = """
     LAs az$ucena@s de blanco0_: raso e|rguíanse con cierto desmayo, com/o las
 seño;.ritas en, en en en# t1ra2je@ de traje que que que que que la pobre había la..s camelias de color ca/rnoso hacían ,pensar.- en
-tibias,,, desnudeces..., en grandes() señora|s indolentemente tendidas, mo0strando0
+tibias,,, desnudeces..., en grandes() señora|s indolentemente tendidas, mo0strando0 había Había
 l[os misterio]s d°e s¨u piel de seda --_Borda, _Borda_ Bordeta_... nos asamos. ¡Por Dios! ¡Un traje de agua!
 """
 
 """from texto import obtener_texto as texto_usar"""
+texto_usar =  texto_usar.replace("á","a").replace("é","e").replace("í","i").replace("ó","o").replace("ú","u").replace("ñ","n").replace("ü","u").replace("Á","A").replace("É","E").replace("Í","I").replace("Ó","O").replace("Ú","U").replace("Ñ","N").replace("Ü","U").casefold()
 lista_texto = texto_usar.split()
 
 def eliminar_caracteres(lista_texto):
