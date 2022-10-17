@@ -17,26 +17,30 @@ def jugabilidad(palabra):
     palabraAhorcado = palabra.lower()
     caracter = "?"
     muestraParcial = len(palabraAhorcado)*caracter
+    print(palabraAhorcado)
 
 
     contadorAciertos = 0
     contadorErrores = 0
 
-    
-    letra = input("Ingrese una letra (0 o esc salir): ")
+    letras = ""
 
     print(f"Palabra a adivinar: {muestraParcial}  Aciertos: {contadorAciertos}  Desaciertos: {contadorErrores}")
 
-    while contadorErrores <= 7 and not letra.isnumeric() and len(letra)==1:
+    while contadorErrores <= 7:
 
-    """    muestraParcial = ""
+
+        muestraParcial = ""
         letra = input("Ingrese una letra (0 o esc salir): ")
 
         if len(letra)> 1 or not letra.isalpha():
             print("Ingreso erroneo")
             letra = input("Ingrese una letra (0 o esc salir): ")
+        elif letra == "0" or letra == "esc":
+            print("has escapado! ")
+            # contadorErrores = 10
 
-        letra += letra
+        letras += letra
 
         if letra not in palabraAhorcado:
             contadorErrores += 1
@@ -46,7 +50,7 @@ def jugabilidad(palabra):
         
 
         for i in range (len(palabraAhorcado)):
-            if palabraAhorcado[i] in letra:
+            if palabraAhorcado[i] in letras:
                 muestraParcial += palabraAhorcado[i]
             else:
                 muestraParcial += caracter
@@ -61,7 +65,7 @@ def jugabilidad(palabra):
             contadorErrores = 15
         
         if contadorErrores == 8:
-            print("PERDISTE")"""
+            print("PERDISTE")
 
     
     return None
