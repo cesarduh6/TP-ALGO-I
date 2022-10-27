@@ -8,6 +8,7 @@ l[os misterio]s d°e s¨u piel de seda --_Borda, _Borda_ Bordeta_... nos asamos.
 """from texto import obtener_texto as texto_usar"""
 texto_usar =  texto_usar.replace("á","a").replace("é","e").replace("í","i").replace("ó","o").replace("ú","u").replace("ñ","n").replace("ü","u").replace("Á","A").replace("É","E").replace("Í","I").replace("Ó","O").replace("Ú","U").replace("Ñ","N").replace("Ü","U").casefold()
 lista_texto = texto_usar.split()
+print(lista_texto)
 
 def eliminar_caracteres(lista_texto):
     #lista_solo_alfabetica -> almacenará cada palabra del texto sin caracteres especiales, solo letras
@@ -18,7 +19,7 @@ def eliminar_caracteres(lista_texto):
                 palabra = palabra.replace(caracter,"")
         lista_solo_alfabetica.append(palabra)
     return lista_solo_alfabetica
-"""print(eliminar_caracteres(lista_texto))"""
+print(eliminar_caracteres(lista_texto))
 
 lista_filtrada_solo_alfabeticos = eliminar_caracteres(lista_texto)
 
@@ -27,10 +28,10 @@ def filtrador(texto):
     lista_aux = []
     for palabra in texto:
         palabra=palabra.lower()
-        if len(palabra) >= 5 and palabra.isalpha() and not palabra in lista_aux:
+        if len(palabra) >= 5 and not palabra in lista_aux:
             lista_aux.append(palabra)
     return lista_aux
-"""print(filtrador(lista_filtrada_solo_alfabeticos))"""
+print(filtrador(lista_filtrada_solo_alfabeticos))
 
 lista_filtrada_mayores_5 = filtrador(lista_filtrada_solo_alfabeticos)
 
@@ -44,4 +45,4 @@ def diccionario(texto):
         diccionario_palabra[palabra_filtrador]=contador_palabra
     return dict(sorted(diccionario_palabra.items(), key = lambda diccionario:diccionario[0]))
 
-"""print(diccionario(lista_filtrada_solo_alfabeticos))"""
+print(diccionario(lista_filtrada_solo_alfabeticos))
