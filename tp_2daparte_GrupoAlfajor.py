@@ -9,6 +9,7 @@ l[os misterio]s d°e s¨u piel de seda --_Borda, _Borda_ Bordeta_... nos asamos.
 texto_usar =  texto_usar.replace("á","a").replace("é","e").replace("í","i").replace("ó","o").replace("ú","u").replace("ñ","n").replace("ü","u").replace("Á","A").replace("É","E").replace("Í","I").replace("Ó","O").replace("Ú","U").replace("Ñ","N").replace("Ü","U").casefold()
 lista_texto = texto_usar.split()
 print(lista_texto)
+longitud_minima = 5
 
 def eliminar_caracteres(lista_texto):
     #lista_solo_alfabetica -> almacenará cada palabra del texto sin caracteres especiales, solo letras
@@ -28,7 +29,7 @@ def filtrador(texto):
     lista_aux = []
     for palabra in texto:
         palabra=palabra.lower()
-        if len(palabra) >= 5 and not palabra in lista_aux:
+        if len(palabra) >= longitud_minima and not palabra in lista_aux:
             lista_aux.append(palabra)
     return lista_aux
 print(filtrador(lista_filtrada_solo_alfabeticos))

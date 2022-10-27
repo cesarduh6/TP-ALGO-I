@@ -1,4 +1,4 @@
-from tp_2daparte_GrupoAlfajor import diccionario,lista_filtrada_solo_alfabeticos
+from tp_2daparte_GrupoAlfajor import diccionario,lista_filtrada_solo_alfabeticos, longitud_minima
 from random import randint
 
 diccionario_usar = diccionario(lista_filtrada_solo_alfabeticos)
@@ -10,7 +10,7 @@ def validez_longitud(longitud):
         longitud = int(input("Error. Ingrese longitud de la palabra que desea adivinar: "))
     return longitud
 
-longitud_palabra= validez_longitud()
+longitud_palabra= validez_longitud(longitud_minima)
 
 def lista_candidatas(diccionario,longitud):
     lista_candidatas = []
@@ -27,7 +27,7 @@ def lista_candidatas(diccionario,longitud):
             lista_candidatas.append(clave)
     return lista_candidatas
 
-"""print(lista_candidatas(diccionario_usar,longitud_palabra))"""
+print(lista_candidatas(diccionario_usar,longitud_palabra))
 
 palabras_candidatas = lista_candidatas(diccionario_usar,longitud_palabra)
 
