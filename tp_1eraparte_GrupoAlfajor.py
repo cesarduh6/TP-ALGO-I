@@ -1,75 +1,116 @@
-from random import randint
+def secuenciaRetornoEscape(palabraAhorcado, contadorAciertos, contadorErrores, letras,palabraErronea):
+    letra = input("Ingrese una letra (0 o esc salir): ")
+    btnEscape, contadorErrores = secuenciaEscape(letra,contadorErrores)
+    letraValidar, letras, btnEscape, contadorErrores = ingresosErroneos(letra,letras, contadorErrores)
+    
+    if letraValidar in palabraAhorcado:
+        contadorAciertos += 1
+    else:
+        contadorErrores += 1
+        palabraErronea += letraValidar
+    return contadorAciertos,contadorErrores, letras, btnEscape, letraValidar, palabraErronea
 
-def diccionarioPalabras():
-    listado = ["casa", "auto", "casita", "alfajor", "amistad", "empeño", "gladiador", "jugador", "basquet",
-    "roquero", "principe", "princesa", "caperucita", "onomatopeya", "clembuterol", "circulo"]
-    # listado.sort()
-    return listado
+def ingresosErroneos(letra,letras,contadorErrores):
+    
+    bucleErrores = None
+    letraValidar = ""
+    btnEscape = True
 
+    if len(letra)>1:
+        bucleErrores = True
+    elif letra.isalpha() == False and letra != "0":
+        bucleErrores = True
+    elif letra in letras:
+        print("letra repetida no cuenta")
+        bucleErrores = True
+    else:
+        letras += letra
+        letraValidar = letra
+    
+    while bucleErrores == True:
+        print("Ingreso erroneo")
+        letra = input("Ingrese una letra (0 o esc salir): ")
+        if letra == "esc" or letra == "0":
+            btnEscape, contadorErrores = secuenciaEscape (letra, contadorErrores)
+            # print (f" el boton escape dio {btnEscape}, contador errores dio {contadorErrores}")
+            bucleErrores = False
+        elif len(letra) == 1 and letra.isalpha() == True and letra not in letras:
+            letras += letra
+            letraValidar = letra
+            bucleErrores = False
+                
+    return letraValidar, letras, btnEscape, contadorErrores
 
-def elegirPalabra(listado):
-    palabraSeleccionada = listado[randint(1,len(listado)-1)]
-    # print(palabraSeleccionada)
-    return palabraSeleccionada
+def secuenciaEscape(letra, contadorErrores):
+    btnEscape = True
+    validacionEscape = False
+    
+    if letra == "esc" or letra == "0":
+        validacionEscape = True
 
-def jugabilidad(palabra):
+    if validacionEscape == True:
+        print("Has escapado")
+        btnEscape = False
+        contadorErrores = 10
+    
+    return btnEscape, contadorErrores
+    
+def mostrarSignosEspeciales(letras, palabraAhorcado):
 
+    muestraParcial = ""
+
+    for i in range (len(palabraAhorcado)):
+        if palabraAhorcado[i] in letras:
+            muestraParcial += palabraAhorcado[i]
+        else:
+            muestraParcial += "?"
+    print(muestraParcial)
+
+        
+    return muestraParcial
+
+def muestraAciertosErrores(letra, muestraParcial, contadorAciertos, contadorErrores, palabraAhorcado,palabraErronea):
+    
+    if letra in palabraAhorcado:
+        print(f"Muy bien jajaja {muestraParcial} Aciertos: {contadorAciertos} Desaciertos: {contadorErrores} ")
+    else:
+        print(f"Lo siento {muestraParcial} Aciertos: {contadorAciertos} Desaciertos: {contadorErrores} - {palabraErronea}")
+    
+    return muestraParcial,contadorAciertos, contadorErrores
+
+def ganadorPerdedor(muestraParcial, palabraAhorcado, contadorErrores):
+
+    if muestraParcial == palabraAhorcado:
+        contadorErrores = 15
+        print("HAS GANADO!")
+        
+    if contadorErrores == 8:
+        print("PERDISTE")
+
+    return contadorErrores
+
+def jugarAhorcado(palabra):
     palabraAhorcado = palabra.lower()
     caracter = "?"
     muestraParcial = len(palabraAhorcado)*caracter
-
-
+    letras = ""
+    palabraErronea = ''
     contadorAciertos = 0
     contadorErrores = 0
 
-    
-    letra = input("Ingrese una letra (0 o esc salir): ")
-
     print(f"Palabra a adivinar: {muestraParcial}  Aciertos: {contadorAciertos}  Desaciertos: {contadorErrores}")
 
-    while contadorErrores <= 7 and not letra.isnumeric() and len(letra)==1:
+    while contadorErrores <= 7:
 
-    """    muestraParcial = ""
-        letra = input("Ingrese una letra (0 o esc salir): ")
+        contadorAciertos, contadorErrores, letras, btnEscape,letra,palabraErronea = secuenciaRetornoEscape(palabraAhorcado, contadorAciertos, contadorErrores, letras,palabraErronea)
 
-        if len(letra)> 1 or not letra.isalpha():
-            print("Ingreso erroneo")
-            letra = input("Ingrese una letra (0 o esc salir): ")
+        if btnEscape == True:  
 
-        letra += letra
-
-        if letra not in palabraAhorcado:
-            contadorErrores += 1
-            # print(f"contador intentos {contadorErrores}")
+            muestraParcial = mostrarSignosEspeciales(letras,palabraAhorcado)
+            muestraParcial, contadorAciertos, contadorErrores = muestraAciertosErrores(letra, muestraParcial, contadorAciertos, contadorErrores, palabraAhorcado,palabraErronea)
+            contadorErrores = ganadorPerdedor(muestraParcial, palabraAhorcado, contadorErrores)
+            
         else:
-            contadorAciertos += 1
-        
-
-        for i in range (len(palabraAhorcado)):
-            if palabraAhorcado[i] in letra:
-                muestraParcial += palabraAhorcado[i]
-            else:
-                muestraParcial += caracter
-
-        if letra in muestraParcial:
-            print(f"Muy bien jajaja {muestraParcial} Aciertos: {contadorAciertos} Desaciertos: {contadorErrores} ")
-        else:
-            print(f"Lo siento {muestraParcial} Aciertos: {contadorAciertos} Desaciertos: {contadorErrores} ")
-
-        if muestraParcial == palabraAhorcado:
-            print("HAS GANADO!")
-            contadorErrores = 15
-        
-        if contadorErrores == 8:
-            print("PERDISTE")"""
-
-    
+            contadorErrores = 100
+            
     return None
-
-
-def main():
-
-    palabraElegida= elegirPalabra(diccionarioPalabras())
-    jugabilidad(palabraElegida)
-
-main()
