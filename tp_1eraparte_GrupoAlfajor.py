@@ -15,6 +15,22 @@ l[os misterio]s d°e s¨u piel de seda --_Borda, _Borda_ Bordeta_... nos asamos.
 # ---------------- GENERAR LISTA/DICCIONARIO TP PARTE 2 --------------------- #
 
 def F_lista_texto(texto_usar):
+    """caracteres_especiales_A = 'áÁàÀäÄ'
+    caracteres_especiales_E = 'éÉèÈëË'
+    caracteres_especiales_I = 'íÍìÌïÏ'
+    caracteres_especiales_O = 'óÓòÒöÖ'
+    caracteres_especiales_U = 'úÚùÙüÜ'
+    for caracter in texto_usar:
+        if caracter in caracteres_especiales_A:
+            texto_usar[caracter].replace(caracter,"a")
+        elif caracter in caracteres_especiales_E:
+            texto_usar[caracter].replace(caracter,"e")
+        elif caracter in caracteres_especiales_I:
+            texto_usar[caracter].replace(caracter,"i")
+        elif caracter in caracteres_especiales_O:
+            texto_usar[caracter].replace(caracter,"o")
+        elif caracter in caracteres_especiales_U:
+            texto_usar[caracter].replace(caracter,"u")"""
     texto_usar =  texto_usar.replace("á","a").replace("é","e").replace("í","i").replace("ó","o").replace("ú","u").replace("ñ","n").replace("ü","u").replace("Á","A").replace("É","E").replace("Í","I").replace("Ó","O").replace("Ú","U").replace("Ñ","N").replace("Ü","U").casefold()
     lista_texto = texto_usar.split()
     return lista_texto
