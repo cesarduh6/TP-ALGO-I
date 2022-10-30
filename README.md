@@ -14,9 +14,9 @@ Usaremos esta herramienta para hacer modificaciones al TP y al mismo tiempo para
 ## ESTRUCTURA -> Pasos a Seguir:
 ADICIONAL
 
-### x. PJ puede tener como máximo 7 desaciertos por palabra a adivinar
+x. PJ puede tener como máximo 7 desaciertos por palabra a adivinar
 
-### x. PJ perderá si llega al 8vo desacierto
+x. PJ perderá si llega al 8vo desacierto
 
 INICIO
 
