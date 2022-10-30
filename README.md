@@ -12,13 +12,13 @@ Usaremos esta herramienta para hacer modificaciones al TP y al mismo tiempo para
 [Link para las reuniones](https://meet.google.com/jep-yrow-rbn)
 
 ## ESTRUCTURA -> PASOS A SEGUIR:
-ADICIONAL
+**ADICIONAL**
 
 x. PJ puede tener como máximo 7 desaciertos por palabra a adivinar
 
 x. PJ perderá si llega al 8vo desacierto
 
-INICIO
+**INICIO**
 
 0. Mostrar tantos signos de preguntas como letras componen la palabra a adivinar (Check)
 
