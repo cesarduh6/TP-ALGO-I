@@ -11,7 +11,7 @@ Usaremos esta herramienta para hacer modificaciones al TP y al mismo tiempo para
 
 [Link para las reuniones](https://meet.google.com/jep-yrow-rbn)
 
-## ESTRUCTURA -> Pasos a Seguir:
+## ESTRUCTURA -> PASOS A SEGUIR:
 ADICIONAL
 
 x. PJ puede tener como máximo 7 desaciertos por palabra a adivinar
