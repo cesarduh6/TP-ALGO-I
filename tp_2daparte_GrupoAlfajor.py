@@ -8,7 +8,7 @@ l[os misterio]s d°e s¨u piel de seda --_Borda, _Borda_ Bordeta_... nos asamos.
 """from texto import obtener_texto as texto_usar"""
 texto_usar =  texto_usar.replace("á","a").replace("é","e").replace("í","i").replace("ó","o").replace("ú","u").replace("ñ","n").replace("ü","u").replace("Á","A").replace("É","E").replace("Í","I").replace("Ó","O").replace("Ú","U").replace("Ñ","N").replace("Ü","U").casefold()
 lista_texto = texto_usar.split()
-print(lista_texto)
+"""print(lista_texto)"""
 longitud_minima = 5
 
 def eliminar_caracteres(lista_texto):

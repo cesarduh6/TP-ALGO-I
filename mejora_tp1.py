@@ -1,15 +1,17 @@
 from random import randint
-"""from texto import obtener_texto as texto"""
+"""from texto import obtener_texto as texto_usar"""
 #----------------------------------------- PARTE 2 --------------------------------------------#
 texto_usar = """
     LAs az$ucena@s de blanco0_: raso e|rguíanse con cierto desmayo, com/o las
 seño;.ritas en, en en en# t1ra2je@ de traje que que que que que la pobre había la..s camelias de color ca/rnoso hacían ,pensar.- en
 tibias,,, desnudeces..., en grandes() señora|s indolentemente tendidas, mo0strando0 había Había
 l[os misterio]s d°e s¨u piel de seda --_Borda, _Borda_ Bordeta_... nos asamos. ¡Por Dios! ¡Un traje de agua!
+El valor del dólar blue tiene una diferencia sustancial con el dólar oficial, que se adquiere en los bancos y que posee una cotización establecida. Su venta es en el mercado informal, sin regulaciones ni límites, y por eso se opera generalmente a un valor mayor que el dólar oficial.
 """
 longitud_minima = 5
 
 def obtener_texto(texto_usar):
+
     texto_usar =  texto_usar.replace("á","a").replace("é","e").replace("í","i").replace("ó","o").replace("ú","u").replace("ñ","n").replace("ü","u").replace("Á","A").replace("É","E").replace("Í","I").replace("Ó","O").replace("Ú","U").replace("Ñ","N").replace("Ü","U").casefold()
     lista_texto = texto_usar.split()
     return lista_texto
@@ -80,10 +82,9 @@ def diccionario_palabras_repetidas(texto):
 
 """print(diccionario_palabras_repetidas(lista_filtrada_solo_alfabeticos))"""
 
-# ------------------------------------------------- ETAPA 3 -------------------------------------- #
-
 diccionario_usar = diccionario_palabras_repetidas(lista_filtrada_solo_alfabeticos)
-"""print(diccionario_usar)"""
+
+# ------------------------------------------------- ETAPA 3 -------------------------------------- #
 
 def validez_longitud(longitud):
     """
@@ -116,13 +117,11 @@ def lista_candidatas(diccionario,longitud,longitud_minima):
     lista_candidatas = []
     if longitud >= longitud_minima :
         #Asumiendo que el jugador ingresa alguna longitud  
-        print(f"Solo juegan las palabras con {longitud} caracteres")
         for clave in diccionario:
             if len(clave) == longitud:
                 lista_candidatas.append(clave)
     else:
         #Si no ingresa una longitud o ingresa "cero", juegan todas las palabras
-        print("Juegan todas las palabras")
         for clave in diccionario:
             lista_candidatas.append(clave)
     return lista_candidatas
@@ -146,7 +145,6 @@ def palabra_aleatoria(lista_candidatas):
 
 palabra_a_adivinar = palabra_aleatoria(palabras_candidatas)
 """print(f"Palabra elegida: {palabra_aleatoria(palabras_candidatas)}")"""
-
 
 # ------------------------------------------- ETAPA 1 ----------------------------------------- #
 
@@ -248,29 +246,29 @@ def letraValida(letrasBuenas, letrasMalas):
     """
     salidaLetra = []
     continuaJugando = None
-    i = 0
-    while i < 1:
+    variable_de_control = 0
+    while variable_de_control < 1:
         letra = ingresoLetra(letrasBuenas, letrasMalas)
         intentoEscape = funcionEscape(letra) 
         if intentoEscape:
             continuaJugando = False
-            i = 10
+            variable_de_control = 10
         else:
             caracterValido = esSoloUnaLetra(letra)
             if caracterValido:
                 continuaJugando = True
-                i = 10
+                variable_de_control = 10
             else:
                 devolucionDeCorrecion = correccionLetraMala(letra,letrasBuenas, letrasMalas)
                 # print(f"acá hay que almacenar está variable en letras {devolucionDeCorrecion[0]}")
                 if devolucionDeCorrecion[1]:
                     continuaJugando = True
                     letra = devolucionDeCorrecion[0]          
-                    i = 10
+                    variable_de_control = 10
                 else:
                     continuaJugando = False
                     letra = devolucionDeCorrecion[0]
-                    i = 10
+                    variable_de_control = 10
     salidaLetra.append(letra)
     salidaLetra.append(continuaJugando)
     # print("salida buena está saliendo {}".format(salidaLetra))
@@ -374,10 +372,10 @@ def ganaPierdo(muestraParcial, palabraAhorcado, contadorErrores,puntaje):
     """
     if muestraParcial == palabraAhorcado:
         contadorErrores = 9
-        print(f"\n HAS GANADO! SU PUNTAJE FINAL ES: {puntaje}\n")
+        print(f"\nHAS GANADO! SU PUNTAJE FINAL ES: {puntaje}\n")
         nueva_partida(puntaje)
     elif contadorErrores == 8:
-        print(f"\n PERDISTE! SU PUNTAJE FINAL ES: {puntaje}\n")
+        print(f"\nPERDISTE! SU PUNTAJE FINAL ES: {puntaje}\nPalabra a adivinar era: {palabraAhorcado}\n")
         nueva_partida(puntaje)
     else:
         pass
@@ -405,7 +403,7 @@ def nueva_partida(puntaje_anterior):
     """
     consulta_nueva_partida = input("Desea jugar una nueva partida? (s/n): ")
     puntaje_nuevo = 0
-    while consulta_nueva_partida == 's':
+    while consulta_nueva_partida == 's' or consulta_nueva_partida!= 'n':
         jugar()
         puntaje_nuevo = jugar()
         tot = puntaje_anterior + puntaje_nuevo
@@ -418,7 +416,7 @@ def jugar():
     contador = 0
     letrasMalas = ""
     letrasBuenas = ""
-    max_desaciertos = 7
+    cant_intentos = 7
     puntos_por_acierto = 10
     puntos_por_desaciertos = -5
     total_puntajes_ganados = 0
@@ -428,7 +426,7 @@ def jugar():
     muestraParcial = muestraPalabraEncriptada(letrasBuenas, palabraElegida)
 
     print(f"Palabra a adivinar: {muestraParcial}  Aciertos: {aciertos}  Desaciertos: {errores}")
-    while contador <= max_desaciertos:
+    while contador <= cant_intentos:
 
         salidaLetra = letraValida(letrasBuenas, letrasBuenas)
         sigueJugando = salidaLetra[1]
@@ -459,8 +457,8 @@ def jugar():
             else:
                 print("Letra repetida")
         else:
-            print("Has salido")
             contador = 10
+            print("Has salido")
 
     return puntaje
 
