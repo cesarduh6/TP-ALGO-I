@@ -18,7 +18,8 @@ texto = obtener_texto(texto_usar)
 
 def eliminar_caracteres(lista_texto):
     """ 
-    Función: eliminar_caracteres
+    Función:
+        eliminar_caracteres
     Parámetros: 
         lista_texto: transforma todo el texto que se le pase a lista
     Salidas:
@@ -39,7 +40,8 @@ lista_filtrada_solo_alfabeticos = eliminar_caracteres(texto)
 
 def filtrador_palabra(lista):
     """
-    Función: filtrador_palabra
+    Función:
+        filtrador_palabra
     Parámetros:
         lista: Lista que almacena palabras solo con caracteres alfabéticos
     Salidas:
@@ -59,7 +61,8 @@ lista_filtrada_mayores_5 = filtrador_palabra(lista_filtrada_solo_alfabeticos)
 
 def diccionario_palabras_repetidas(texto):
     """
-    Función: diccionario_palabras_repetidas
+    Función:
+        diccionario_palabras_repetidas
     Parámetros:
         texto: usamos todo el texto sin caracteres especiales, para comprobar cuantas veces se repite la clave en ese texto
     Salidas:
@@ -84,7 +87,8 @@ diccionario_usar = diccionario_palabras_repetidas(lista_filtrada_solo_alfabetico
 
 def validez_longitud(longitud):
     """
-    Función: validez_longitud
+    Función:
+        validez_longitud
     Parámetros:
         longitud: longitud mínima de los caracteres que almacenamos en la lista de filtrador_palabra
     Salidas:
@@ -100,7 +104,8 @@ longitud_palabra= validez_longitud(longitud_minima)
 
 def lista_candidatas(diccionario,longitud,longitud_minima):
     """
-    Función: lista_candidatas
+    Función:
+        lista_candidatas
     Parámetros:
         diccionario: Usamos la clave del diccionario que creamos con la cant. veces que se repite la palabra
         longitud: Usamos de referencia para filtrar la lista con palabras que tengan esa longitud
@@ -128,7 +133,8 @@ palabras_candidatas = lista_candidatas(diccionario_usar,longitud_palabra,longitu
 
 def palabra_aleatoria(lista_candidatas):
     """
-    Función: palabra_aleatoria
+    Función:
+        palabra_aleatoria
     Parámetros:
         lista_candidatas: Almacena las posibles palabras que vayan a entrar al juego
     Salidas:
@@ -146,7 +152,8 @@ palabra_a_adivinar = palabra_aleatoria(palabras_candidatas)
 
 def ingresoLetra(letrasBuenas, letrasMalas):
     """
-    Función: ingresoLetra
+    Función:
+        ingresoLetra
     Parámetros:
         letrasBuenas: Acumulador de letras que coinciden con la palabra a adivinar
         letraMalas: Acumulador de letras que no coinciden con la palabra a adivinar
@@ -163,7 +170,8 @@ def ingresoLetra(letrasBuenas, letrasMalas):
 
 def funcionEscape(letra):
     """
-    Función: funcionEscape
+    Función:
+        funcionEscape
     Parámetros:
         letra: letra que ingresó el usuario
     Salidas:
@@ -174,7 +182,8 @@ def funcionEscape(letra):
     
 def correccionLetraMala(letra, letrasBuenas, letrasMalas):
     """
-    Función: correccionLetraMala
+    Función:
+        correccionLetraMala
     Parámetros:
         * letra: Letra que ingresó el usuario
         * letrasBuenas: Almacena caracteres que están en la palabra a adivinar
@@ -210,7 +219,8 @@ def correccionLetraMala(letra, letrasBuenas, letrasMalas):
 
 def esSoloUnaLetra(letra):
     """
-    Función: esSoloUnaLetra
+    Función:
+        esSoloUnaLetra
     Parámetros:
         letra: Letra que ingresó el usuario
     Salidas:
@@ -223,7 +233,8 @@ def esSoloUnaLetra(letra):
 
 def letraValida(letrasBuenas, letrasMalas):
     """
-    Función: letraValida
+    Función:
+        letraValida
     Parámetros:
         * letrasBuenas: Almacena caracteres que están en la palabra a adivinar
         * letrasMalas: Almacena caracteres que NO están en la palabra a adivinar
@@ -267,7 +278,8 @@ def letraValida(letrasBuenas, letrasMalas):
 
 def letraBuena(letra, palabraElegida):
     """
-    Función: letraBuena
+    Función:
+        letraBuena
     Parámetros:
         letra: Letra que ingresó el usuario
         palabraElegida: Palabra aleatoria que eligió el sistema
@@ -280,7 +292,8 @@ def letraBuena(letra, palabraElegida):
 
 def muestraAciertosErrores(letra, muestraParcial, contadorAciertos, contadorErrores, palabraAhorcado):
     """
-    Función: muestraAciertosErrores
+    Función:
+        muestraAciertosErrores
     Parámetros:
         letra, muestraParcial, contadorAciertos, contadorErrores, palabraAhorcado
     Salidas:
@@ -295,7 +308,8 @@ def muestraAciertosErrores(letra, muestraParcial, contadorAciertos, contadorErro
 
 def acumularLetras(letra, letras):
     """
-    Función: acumularLetras
+    Función:
+        acumularLetras
     Parámetros:
         letra: Letra que ingresó el usuario
         letras: Variable que almacena TODOS LOS CARACTERES, estén o no estén en la palabra a adivinar
@@ -307,7 +321,8 @@ def acumularLetras(letra, letras):
 
 def muestraPalabraEncriptada(letras, palabraAhorcado):
     """
-    Función: muestraPalabraEncriptada
+    Función:
+        muestraPalabraEncriptada
     Parámetros:
         letras: Variable que almacenó TODOS LOS CARACTERES, estén o no estén en la palabra a adivinar
         palabraAhorcado: palabra aleatoria elegida por el sistema
@@ -325,10 +340,18 @@ def muestraPalabraEncriptada(letras, palabraAhorcado):
 
 def printeoAciertoError(letra, muestraParcial, contadorAciertos, contadorErrores, palabraAhorcado, letrasMalas):
     """
-    Función: printeoAciertoError
+    Función: 
+        printeoAciertoError
     Parámetros:
+        letra: 
+        muestraParcial: palabra a adivinar en formato "?"
+        contadorAciertos: cantidad de aciertos de la partida
+        contadorErrores: cantidad de desaciertos de la partida
+        palabraAhorcado: palabra aleatoria elegida por el sistema
+        letrasMalas: variable que almacena todos los caracteres erróneos
     Salidas:
-    Precondiciones:
+        Imprime el tablero
+
     """
     if letra in palabraAhorcado:
         print(f"Muy bien jajaja {muestraParcial} Aciertos: {contadorAciertos} Desaciertos: {contadorErrores} - {letrasMalas}")
@@ -339,12 +362,13 @@ def printeoAciertoError(letra, muestraParcial, contadorAciertos, contadorErrores
 
 def ganaPierdo(muestraParcial, palabraAhorcado, contadorErrores,puntaje):
     """
-    Función: ganaPierdo
+    Función: 
+        ganaPierdo
     Parámetros:
-        muestraParcial
-        palabraAhorcado
+        muestraParcial: transforma palabra a adivinar en "?"
+        palabraAhorcado: palabra aleatoria elegida por el sistema
         contadorErrores
-        puntaje
+        puntaje: puntaje total por partida
     Salidas:
         Imprime si ganó o perdió el usuario
     """
@@ -361,7 +385,8 @@ def ganaPierdo(muestraParcial, palabraAhorcado, contadorErrores,puntaje):
 
 def Asignacion_Puntajes(tot_ganados,tot_perdidos):
     """
-    Función: Asignacion_Puntajes
+    Función: 
+        Asignacion_Puntajes
     Parámetros:
         tot_ganados: Acumula la cantidad de puntos por cada acierto
         tot_perdidos: Acumula la cantidad de puntos por cada desacierto
@@ -388,19 +413,22 @@ def nueva_partida(puntaje_anterior):
     return tot
 
 def jugar():
-    palabraElegida = palabra_a_adivinar
-    letrasBuenas = ""
-    letrasMalas = ""
-    aciertos = 0 
     errores = 0
+    aciertos = 0 
+    contador = 0
+    letrasMalas = ""
+    letrasBuenas = ""
+    max_desaciertos = 7
+    puntos_por_acierto = 10
+    puntos_por_desaciertos = -5
     total_puntajes_ganados = 0
     total_puntajes_perdidos = 0
+    palabraElegida = palabra_a_adivinar
     puntaje = Asignacion_Puntajes( total_puntajes_ganados, total_puntajes_perdidos)
     muestraParcial = muestraPalabraEncriptada(letrasBuenas, palabraElegida)
 
     print(f"Palabra a adivinar: {muestraParcial}  Aciertos: {aciertos}  Desaciertos: {errores}")
-    contador = 0
-    while contador <= 7:
+    while contador <= max_desaciertos:
 
         salidaLetra = letraValida(letrasBuenas, letrasBuenas)
         sigueJugando = salidaLetra[1]
@@ -412,7 +440,7 @@ def jugar():
 
             if esBuena:
                 aciertos += 1
-                total_puntajes_ganados = aciertos * 10
+                total_puntajes_ganados = aciertos * puntos_por_acierto
                 puntaje = Asignacion_Puntajes( total_puntajes_ganados, total_puntajes_perdidos)
                 letrasBuenas = acumularLetras(letra, letrasBuenas)
                 muestraParcial = muestraPalabraEncriptada(letrasBuenas, palabraElegida)
@@ -421,7 +449,7 @@ def jugar():
                     
             elif letra not in letrasMalas: 
                 errores += 1
-                total_puntajes_perdidos = errores * -5
+                total_puntajes_perdidos = errores * puntos_por_desaciertos
                 puntaje = Asignacion_Puntajes( total_puntajes_ganados, total_puntajes_perdidos)
                 contador += 1
                 letrasMalas = acumularLetras(letra, letrasMalas)
