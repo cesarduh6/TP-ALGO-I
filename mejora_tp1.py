@@ -1,4 +1,5 @@
 from random import randint
+"""from texto import obtener_texto as texto"""
 #----------------------------------------- PARTE 2 --------------------------------------------#
 texto_usar = """
     LAs az$ucena@s de blanco0_: raso e|rguíanse con cierto desmayo, com/o las
@@ -6,14 +7,25 @@ seño;.ritas en, en en en# t1ra2je@ de traje que que que que que la pobre había
 tibias,,, desnudeces..., en grandes() señora|s indolentemente tendidas, mo0strando0 había Había
 l[os misterio]s d°e s¨u piel de seda --_Borda, _Borda_ Bordeta_... nos asamos. ¡Por Dios! ¡Un traje de agua!
 """
-
-"""from texto import obtener_texto as texto_usar"""
-texto_usar =  texto_usar.replace("á","a").replace("é","e").replace("í","i").replace("ó","o").replace("ú","u").replace("ñ","n").replace("ü","u").replace("Á","A").replace("É","E").replace("Í","I").replace("Ó","O").replace("Ú","U").replace("Ñ","N").replace("Ü","U").casefold()
-lista_texto = texto_usar.split()
 longitud_minima = 5
 
+def obtener_texto(texto_usar):
+    texto_usar =  texto_usar.replace("á","a").replace("é","e").replace("í","i").replace("ó","o").replace("ú","u").replace("ñ","n").replace("ü","u").replace("Á","A").replace("É","E").replace("Í","I").replace("Ó","O").replace("Ú","U").replace("Ñ","N").replace("Ü","U").casefold()
+    lista_texto = texto_usar.split()
+    return lista_texto
+
+texto = obtener_texto(texto_usar)
+
 def eliminar_caracteres(lista_texto):
-    #lista_solo_alfabetica -> almacenará cada palabra del texto sin caracteres especiales, solo letras
+    """ 
+    Función: eliminar_caracteres
+    Parámetros: 
+        lista_texto: transforma todo el texto que se le pase a lista
+    Salidas:
+        lista_solo_alfabetica: almacenará cada palabra del texto sin caracteres especiales, solo letras
+    Precondiciones:
+        Las palabras deben estar contenida solo por caracteres alfabéticos
+    """
     lista_solo_alfabetica=[]
     for palabra in lista_texto:
         for caracter in palabra:
@@ -21,40 +33,64 @@ def eliminar_caracteres(lista_texto):
                 palabra = palabra.replace(caracter,"")
         lista_solo_alfabetica.append(palabra)
     return lista_solo_alfabetica
-"""print(eliminar_caracteres(lista_texto))"""
+"""print(eliminar_caracteres(texto))"""
 
-lista_filtrada_solo_alfabeticos = eliminar_caracteres(lista_texto)
+lista_filtrada_solo_alfabeticos = eliminar_caracteres(texto)
 
-def filtrador(texto):
-    #Lista_aux -> Lista que almacenará caracteres de todo el texto (sin caracteres especiales) con >= 5 caracteres, que no se repitan y sean alfabeticos
+def filtrador_palabra(lista):
+    """
+    Función: filtrador_palabra
+    Parámetros:
+        lista: Lista que almacena palabras solo con caracteres alfabéticos
+    Salidas:
+        lista_aux: Lista que almacenará caracteres de todo el texto 
+    Precondiciones:
+        Que la palabras no contengan caracteres especiales, de longitud mayor a 5 caracteres , que no se repitan y sean alfabeticos
+    """
     lista_aux = []
-    for palabra in texto:
+    for palabra in lista:
         palabra=palabra.lower()
         if len(palabra) >= longitud_minima and not palabra in lista_aux:
             lista_aux.append(palabra)
     return lista_aux
-"""print(filtrador(lista_filtrada_solo_alfabeticos))"""
+"""print(filtrador_palabra(lista_filtrada_solo_alfabeticos))"""
 
-lista_filtrada_mayores_5 = filtrador(lista_filtrada_solo_alfabeticos)
+lista_filtrada_mayores_5 = filtrador_palabra(lista_filtrada_solo_alfabeticos)
 
-def diccionario(texto):
+def diccionario_palabras_repetidas(texto):
+    """
+    Función: diccionario_palabras_repetidas
+    Parámetros:
+        texto: usamos todo el texto sin caracteres especiales, para comprobar cuantas veces se repite la clave en ese texto
+    Salidas:
+        diccionario_palabra: diccionario que almacena como clave la palabra sin repetir y como valor las veces que se repite en todo el texto
+    Precondiciones:
+    """
     #diccionario_palabra -> almacenará como 'clave' cada palabra sin repetirse y como 'valor' la cantidad de veces que se repite la clave en todo el texto sin caracteres especiales
     #contador_palabra -> contará la cantidad de veces que se repite la palabra en el texto sin caracteres especiales
     diccionario_palabra = {}
     contador_palabra = 0
-    for palabra_filtrador in filtrador(lista_filtrada_solo_alfabeticos):
+    for palabra_filtrador in lista_filtrada_mayores_5:
         contador_palabra = texto.count(palabra_filtrador)
         diccionario_palabra[palabra_filtrador]=contador_palabra
     return dict(sorted(diccionario_palabra.items(), key = lambda diccionario:diccionario[0]))
 
-"""print(diccionario(lista_filtrada_solo_alfabeticos))"""
+"""print(diccionario_palabras_repetidas(lista_filtrada_solo_alfabeticos))"""
 
 # ------------------------------------------------- ETAPA 3 -------------------------------------- #
 
-diccionario_usar = diccionario(lista_filtrada_solo_alfabeticos)
+diccionario_usar = diccionario_palabras_repetidas(lista_filtrada_solo_alfabeticos)
 """print(diccionario_usar)"""
 
 def validez_longitud(longitud):
+    """
+    Función: validez_longitud
+    Parámetros:
+        longitud: longitud mínima de los caracteres que almacenamos en la lista de filtrador_palabra
+    Salidas:
+        longitud: longitud que usaremos para filtrar el diccionario con las posibles palabras
+    Precondiciones:
+    """
     longitud = int(input("Ingrese longitud de la palabra que desea adivinar: "))
     while longitud == 0:
         longitud = int(input("Error. Ingrese longitud de la palabra que desea adivinar: "))
@@ -62,9 +98,18 @@ def validez_longitud(longitud):
 
 longitud_palabra= validez_longitud(longitud_minima)
 
-def lista_candidatas(diccionario,longitud):
+def lista_candidatas(diccionario,longitud,longitud_minima):
+    """
+    Función: lista_candidatas
+    Parámetros:
+        diccionario: Usamos la clave del diccionario que creamos con la cant. veces que se repite la palabra
+        longitud: Usamos de referencia para filtrar la lista con palabras que tengan esa longitud
+    Salidas:
+        lista_candidatas: Almacena las posibles palabras que vayan a entrar al juego
+    Precondiciones:
+    """
     lista_candidatas = []
-    if longitud >= 5 :
+    if longitud >= longitud_minima :
         #Asumiendo que el jugador ingresa alguna longitud  
         print(f"Solo juegan las palabras con {longitud} caracteres")
         for clave in diccionario:
@@ -79,9 +124,17 @@ def lista_candidatas(diccionario,longitud):
 
 """print(lista_candidatas(diccionario_usar,longitud_palabra))"""
 
-palabras_candidatas = lista_candidatas(diccionario_usar,longitud_palabra)
+palabras_candidatas = lista_candidatas(diccionario_usar,longitud_palabra,longitud_minima)
 
 def palabra_aleatoria(lista_candidatas):
+    """
+    Función: palabra_aleatoria
+    Parámetros:
+        lista_candidatas: Almacena las posibles palabras que vayan a entrar al juego
+    Salidas:
+        palabraSeleccionada: Elige una palabra al azar haciendo uso de la librería random
+    Precondiciones:
+    """
     palabraSeleccionada = lista_candidatas[randint(1,len(lista_candidatas)-1)]
     return palabraSeleccionada
 
@@ -92,6 +145,16 @@ palabra_a_adivinar = palabra_aleatoria(palabras_candidatas)
 # ------------------------------------------- ETAPA 1 ----------------------------------------- #
 
 def ingresoLetra(letrasBuenas, letrasMalas):
+    """
+    Función: ingresoLetra
+    Parámetros:
+        letrasBuenas: Acumulador de letras que coinciden con la palabra a adivinar
+        letraMalas: Acumulador de letras que no coinciden con la palabra a adivinar
+    Salidas:
+        letra: Se retorna una letra que no pertenece 
+    Precondiciones:
+        Hay que ingresar una letra
+    """
     letra = input("Ingrese una letra (0 o esc salir): ")
     while letra in letrasBuenas or letra in letrasMalas:
         print("letra repetida")
@@ -99,6 +162,13 @@ def ingresoLetra(letrasBuenas, letrasMalas):
     return letra
 
 def funcionEscape(letra):
+    """
+    Función: funcionEscape
+    Parámetros:
+        letra: letra que ingresó el usuario
+    Salidas:
+        intentoEscape: True si letra es "esc" o "0", False si letra no es "esc" o "0"
+    """
     """ Evalua si escapas """
     intentoEscape = False
     if letra == "esc" or letra == "0":
@@ -107,11 +177,24 @@ def funcionEscape(letra):
     return intentoEscape
     
 def correccionLetraMala(letra, letrasBuenas, letrasMalas):
+    """
+    Función: correccionLetraMala
+    Parámetros:
+        * letra: Letra que ingresó el usuario
+        * letrasBuenas: Almacena caracteres que están en la palabra a adivinar
+        * letrasMalas: Almacena caracteres que NO están en la palabra a adivinar
+    Salidas:
+        * salida: Lista que contiene letra ingresada por el usuario y un Booleano
+    Precondiciones:
+        * Letra debe tener longitud mayor a 1
+    Postcondiciones:
+        * Devuelve un lista con la letra válida y un booleano para evaluar si continúas o no jugando
+    """
+
     i = 0
     evaluacionLetra = None
     salida = []
     while i < 10:
-        
         print("Ingreso erroneo")
         letra = ingresoLetra(letrasBuenas, letrasMalas)
         intentoEscapar = funcionEscape(letra)
@@ -125,13 +208,20 @@ def correccionLetraMala(letra, letrasBuenas, letrasMalas):
                 i = 10
             else:
                 pass
-
     salida.append(letra)
-    salida.append(evaluacionLetra)  
-                 
-    return salida            
+    salida.append(evaluacionLetra)          
+    return salida       
 
 def esSoloUnaLetra(letra):
+    """
+    Función: esSoloUnaLetra
+    Parámetros:
+        letra: Letra que ingresó el usuario
+    Salidas:
+        esLetra: Booleano - > Variable de control
+    Precondiciones:
+        La letra debe tener longitud 1 y ser alfabético
+    """
     if len(letra) == 1 and letra.isalpha() is True:
         esLetra = True
     else: 
@@ -140,6 +230,19 @@ def esSoloUnaLetra(letra):
     return esLetra
 
 def letraValida(letrasBuenas, letrasMalas):
+    """
+    Función: letraValida
+    Parámetros:
+        * letrasBuenas: Almacena caracteres que están en la palabra a adivinar
+        * letrasMalas: Almacena caracteres que NO están en la palabra a adivinar
+    Salidas:
+        * salidaLetra: Retorna una lista con una variable booleano y la letra ingresada
+    Precondiciones:
+        * Letra de longitud 1
+        * Alfabetica
+        * No se repita la letra
+        * Evalua si continúas jugando o no
+    """
     salidaLetra = []
     continuaJugando = None
     i = 0
@@ -172,13 +275,29 @@ def letraValida(letrasBuenas, letrasMalas):
     return salidaLetra
 
 def letraBuena(letra, palabraElegida):
+    """
+    Función: letraBuena
+    Parámetros:
+        letra: Letra que ingresó el usuario
+        palabraElegida: Palabra aleatoria que eligió el sistema
+    Salidas:
+        esBuena: Booleano -> Variable de Control
+    Precondiciones:
+        Que letra ingresada esté en la palabra elegida
+    """
     esBuena = False
     if letra in palabraElegida:
         esBuena = True
     return esBuena
 
 def muestraAciertosErrores(letra, muestraParcial, contadorAciertos, contadorErrores, palabraAhorcado):
-    
+    """
+    Función: muestraAciertosErrores
+    Parámetros:
+        letra, muestraParcial, contadorAciertos, contadorErrores, palabraAhorcado
+    Salidas:
+        Imprime el tablero
+    """
     if letra in palabraAhorcado:
         print(f"Muy bien jajaja {muestraParcial} Aciertos: {contadorAciertos} Desaciertos: {contadorErrores} ")
     else:
@@ -187,11 +306,26 @@ def muestraAciertosErrores(letra, muestraParcial, contadorAciertos, contadorErro
     return None
 
 def acumularLetras(letra, letras):
+    """
+    Función: acumularLetras
+    Parámetros:
+        letra: Letra que ingresó el usuario
+        letras: Variable que almacena TODOS LOS CARACTERES, estén o no estén en la palabra a adivinar
+    Salidas:
+        Letras acumuladas
+    """
     letras += letra
     return letras
 
 def muestraPalabraEncriptada(letras, palabraAhorcado):
-
+    """
+    Función: muestraPalabraEncriptada
+    Parámetros:
+        letras: Variable que almacenó TODOS LOS CARACTERES, estén o no estén en la palabra a adivinar
+        palabraAhorcado: palabra aleatoria elegida por el sistema
+    Salidas:
+        Encripta la palabra 
+    """
     muestraParcial = ""
     for i in range (len(palabraAhorcado)):
         if palabraAhorcado[i] in letras:
@@ -202,7 +336,12 @@ def muestraPalabraEncriptada(letras, palabraAhorcado):
     return muestraParcial
 
 def printeoAciertoError(letra, muestraParcial, contadorAciertos, contadorErrores, palabraAhorcado, letrasMalas):
-    
+    """
+    Función: printeoAciertoError
+    Parámetros:
+    Salidas:
+    Precondiciones:
+    """
     if letra in palabraAhorcado:
         print(f"Muy bien jajaja {muestraParcial} Aciertos: {contadorAciertos} Desaciertos: {contadorErrores} - {letrasMalas}")
     else:
@@ -211,7 +350,16 @@ def printeoAciertoError(letra, muestraParcial, contadorAciertos, contadorErrores
     return None
 
 def ganaPierdo(muestraParcial, palabraAhorcado, contadorErrores,puntaje):
-
+    """
+    Función: ganaPierdo
+    Parámetros:
+        muestraParcial
+        palabraAhorcado
+        contadorErrores
+        puntaje
+    Salidas:
+        Imprime si ganó o perdió el usuario
+    """
     if muestraParcial == palabraAhorcado:
         contadorErrores = 9
         print(f"\n HAS GANADO! SU PUNTAJE FINAL ES: {puntaje}\n")
@@ -221,13 +369,27 @@ def ganaPierdo(muestraParcial, palabraAhorcado, contadorErrores,puntaje):
         nueva_partida(puntaje)
     else:
         pass
-
     return contadorErrores
 
 def Asignacion_Puntajes(tot_ganados,tot_perdidos):
+    """
+    Función: Asignacion_Puntajes
+    Parámetros:
+        tot_ganados: Acumula la cantidad de puntos por cada acierto
+        tot_perdidos: Acumula la cantidad de puntos por cada desacierto
+    Salidas:
+        Retorna el puntaje total
+    """
     return tot_ganados + tot_perdidos
 
 def nueva_partida(puntaje_anterior):
+    """
+    Función: nueva_partida
+    Parámetros:
+        puntaje_anterior: Almacena el puntaje acumulador de todas las partidas jugadas
+    Salidas:
+        tot: Acumula el puntaje de todas las partidas jugadas
+    """
     consulta_nueva_partida = input("Desea jugar una nueva partida? (s/n): ")
     puntaje_nuevo = 0
     while consulta_nueva_partida == 's':
@@ -236,6 +398,7 @@ def nueva_partida(puntaje_anterior):
         tot = puntaje_anterior + puntaje_nuevo
     tot = puntaje_anterior + puntaje_nuevo
     return tot
+
 
 def jugar():
     palabraElegida = palabra_a_adivinar
