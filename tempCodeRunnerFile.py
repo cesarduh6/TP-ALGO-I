@@ -1,2 +1,2 @@
 
-            texto_usar[caracter].replace(caracter,"u")"""
+                puntaje = Asignacion_Puntajes( total_puntajes_ganados, total_puntajes_perdidos)

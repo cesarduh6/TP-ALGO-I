@@ -201,22 +201,24 @@ def muestraPalabraEncriptada(letras, palabraAhorcado):
     
     return muestraParcial
 
-def printeoAciertoError(letra, muestraParcial, contadorAciertos, contadorErrores, palabraAhorcado, letrasMalas, puntaje):
+def printeoAciertoError(letra, muestraParcial, contadorAciertos, contadorErrores, palabraAhorcado, letrasMalas):
     
     if letra in palabraAhorcado:
-        print(f"Muy bien jajaja {muestraParcial} Aciertos: {contadorAciertos} Desaciertos: {contadorErrores} Puntaje: {puntaje}")
+        print(f"Muy bien jajaja {muestraParcial} Aciertos: {contadorAciertos} Desaciertos: {contadorErrores} - {letrasMalas}")
     else:
-        print(f"Lo siento {muestraParcial} Aciertos: {contadorAciertos} Desaciertos: {contadorErrores}- {letrasMalas} - Puntaje: {puntaje} ")
+        print(f"Lo siento {muestraParcial} Aciertos: {contadorAciertos} Desaciertos: {contadorErrores} - {letrasMalas} ")
     
     return None
 
-def ganaPierdo(muestraParcial, palabraAhorcado, contadorErrores):
+def ganaPierdo(muestraParcial, palabraAhorcado, contadorErrores,puntaje):
 
     if muestraParcial == palabraAhorcado:
         contadorErrores = 9
-        print("HAS GANADO!")
+        print(f"\n HAS GANADO! SU PUNTAJE FINAL ES: {puntaje}\n")
+        nueva_partida(puntaje)
     elif contadorErrores == 8:
-        print("PERDISTE")
+        print(f"\n PERDISTE! SU PUNTAJE FINAL ES: {puntaje}\n")
+        nueva_partida(puntaje)
     else:
         pass
 
@@ -225,25 +227,28 @@ def ganaPierdo(muestraParcial, palabraAhorcado, contadorErrores):
 def Asignacion_Puntajes(tot_ganados,tot_perdidos):
     return tot_ganados + tot_perdidos
 
-def nueva_partida():
+def nueva_partida(puntaje_anterior):
     consulta_nueva_partida = input("Desea jugar una nueva partida? (s/n): ")
-    while consulta_nueva_partida != 'n':
-        main()
-        consulta_nueva_partida = input("Desea jugar una nueva partida? (s/n): ")
-    return consulta_nueva_partida
+    puntaje_nuevo = 0
+    while consulta_nueva_partida == 's':
+        jugar()
+        puntaje_nuevo = jugar()
+        tot = puntaje_anterior + puntaje_nuevo
+    tot = puntaje_anterior + puntaje_nuevo
+    return tot
 
-def main():
+def jugar():
     palabraElegida = palabra_a_adivinar
     letrasBuenas = ""
     letrasMalas = ""
     aciertos = 0 
-    errores = 0 
+    errores = 0
     total_puntajes_ganados = 0
     total_puntajes_perdidos = 0
     puntaje = Asignacion_Puntajes( total_puntajes_ganados, total_puntajes_perdidos)
     muestraParcial = muestraPalabraEncriptada(letrasBuenas, palabraElegida)
 
-    print(f"Palabra a adivinar: {muestraParcial}  Aciertos: {aciertos}  Desaciertos: {errores} Puntaje: {puntaje}")
+    print(f"Palabra a adivinar: {muestraParcial}  Aciertos: {aciertos}  Desaciertos: {errores}")
     contador = 0
     while contador <= 7:
 
@@ -261,8 +266,8 @@ def main():
                 puntaje = Asignacion_Puntajes( total_puntajes_ganados, total_puntajes_perdidos)
                 letrasBuenas = acumularLetras(letra, letrasBuenas)
                 muestraParcial = muestraPalabraEncriptada(letrasBuenas, palabraElegida)
-                printeoAciertoError(letra, muestraParcial, aciertos, errores, palabraElegida, letrasMalas,puntaje)
-                contador = ganaPierdo(muestraParcial, palabraElegida, errores)
+                printeoAciertoError(letra, muestraParcial, aciertos, errores, palabraElegida, letrasMalas)
+                contador = ganaPierdo(muestraParcial, palabraElegida, errores,puntaje)
                     
             elif letra not in letrasMalas: 
                 errores += 1
@@ -271,14 +276,14 @@ def main():
                 contador += 1
                 letrasMalas = acumularLetras(letra, letrasMalas)
                 muestraParcial = muestraPalabraEncriptada(letrasBuenas, palabraElegida)
-                printeoAciertoError(letra, muestraParcial, aciertos, errores, palabraElegida, letrasMalas, puntaje)
-                contador = ganaPierdo(muestraParcial, palabraElegida, errores)
+                printeoAciertoError(letra, muestraParcial, aciertos, errores, palabraElegida, letrasMalas)
+                contador = ganaPierdo(muestraParcial, palabraElegida, errores,puntaje)
             else:
                 print("Letra repetida")
         else:
             print("Has salido")
             contador = 10
-    nueva_partida()
-    return None
 
-main()
+    return puntaje
+
+jugar()
