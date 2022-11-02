@@ -170,11 +170,7 @@ def funcionEscape(letra):
         intentoEscape: True si letra es "esc" o "0", False si letra no es "esc" o "0"
     """
     """ Evalua si escapas """
-    intentoEscape = False
-    if letra == "esc" or letra == "0":
-        # print("Has salido")
-        intentoEscape = True
-    return intentoEscape
+    return letra == "esc" or letra == "0"
     
 def correccionLetraMala(letra, letrasBuenas, letrasMalas):
     """
@@ -190,22 +186,22 @@ def correccionLetraMala(letra, letrasBuenas, letrasMalas):
     Postcondiciones:
         * Devuelve un lista con la letra válida y un booleano para evaluar si continúas o no jugando
     """
-
-    i = 0
+    cant_control = 10
+    variable_de_control = 0
     evaluacionLetra = None
     salida = []
-    while i < 10:
+    while variable_de_control < cant_control:
         print("Ingreso erroneo")
         letra = ingresoLetra(letrasBuenas, letrasMalas)
         intentoEscapar = funcionEscape(letra)
         if intentoEscapar:
             evaluacionLetra = False
-            i = 10
+            variable_de_control = cant_control
         else:
             letraValida = esSoloUnaLetra(letra)
             if letraValida:
                 evaluacionLetra = True
-                i = 10
+                variable_de_control = cant_control
             else:
                 pass
     salida.append(letra)
@@ -222,12 +218,8 @@ def esSoloUnaLetra(letra):
     Precondiciones:
         La letra debe tener longitud 1 y ser alfabético
     """
-    if len(letra) == 1 and letra.isalpha() is True:
-        esLetra = True
-    else: 
-        esLetra = False
-    
-    return esLetra
+    longitud_requerida = 1
+    return len(letra) == longitud_requerida and letra.isalpha()
 
 def letraValida(letrasBuenas, letrasMalas):
     """
@@ -268,7 +260,6 @@ def letraValida(letrasBuenas, letrasMalas):
                     continuaJugando = False
                     letra = devolucionDeCorrecion[0]
                     i = 10
-
     salidaLetra.append(letra)
     salidaLetra.append(continuaJugando)
     # print("salida buena está saliendo {}".format(salidaLetra))
@@ -285,10 +276,7 @@ def letraBuena(letra, palabraElegida):
     Precondiciones:
         Que letra ingresada esté en la palabra elegida
     """
-    esBuena = False
-    if letra in palabraElegida:
-        esBuena = True
-    return esBuena
+    return letra in palabraElegida
 
 def muestraAciertosErrores(letra, muestraParcial, contadorAciertos, contadorErrores, palabraAhorcado):
     """
@@ -398,7 +386,6 @@ def nueva_partida(puntaje_anterior):
         tot = puntaje_anterior + puntaje_nuevo
     tot = puntaje_anterior + puntaje_nuevo
     return tot
-
 
 def jugar():
     palabraElegida = palabra_a_adivinar
