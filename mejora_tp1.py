@@ -1,6 +1,4 @@
-from random import randint
 """from texto import obtener_texto as texto_usar"""
-#----------------------------------------- PARTE 2 --------------------------------------------#
 texto_usar = """
     LAs az$ucena@s de blanco0_: raso e|rguíanse con cierto desmayo, com/o las
 seño;.ritas en, en en en# t1ra2je@ de traje que que que que que la pobre había la..s camelias de color ca/rnoso hacían ,pensar.- en
@@ -36,7 +34,6 @@ def eliminar_caracteres(lista_texto):
                 palabra = palabra.replace(caracter,"")
         lista_solo_alfabetica.append(palabra)
     return lista_solo_alfabetica
-"""print(eliminar_caracteres(texto))"""
 
 lista_filtrada_solo_alfabeticos = eliminar_caracteres(texto)
 
@@ -65,11 +62,20 @@ def diccionarValido():
     texto = obtener_texto(texto_usar)
     lista_filtrada = eliminar_caracteres(texto)
     lista_caracteres_mayor_5 = filtrador_palabra(lista_filtrada)
-    # print(lista_caracteres_mayor_5)
 
     return lista_caracteres_mayor_5
 
 def eligePorCantidad(longitud_Caracteres, lista_diccionario):
+    """
+    Función:
+        lista_candidatas
+    Parámetros:
+        diccionario: Usamos la clave del diccionario que creamos con la cant. veces que se repite la palabra
+        longitud: Usamos de referencia para filtrar la lista con palabras que tengan esa longitud
+    Salidas:
+        lista_candidatas: Almacena las posibles palabras que vayan a entrar al juego
+    Precondiciones:
+    """
     lista_candidatas = []
     if int(longitud_Caracteres) >= longitud_minima:
         for i in range (len(lista_diccionario)):
@@ -81,6 +87,15 @@ def eligePorCantidad(longitud_Caracteres, lista_diccionario):
     return lista_candidatas
 
 def randomPalabraElegida(lista_candidatas):
+    """
+    Función:
+        palabra_aleatoria
+    Parámetros:
+        lista_candidatas: Almacena las posibles palabras que vayan a entrar al juego
+    Salidas:
+        palabraSeleccionada: Elige una palabra al azar haciendo uso de la librería random
+    Precondiciones:
+    """
     from random import randint
     numeroMagico = int(randint(0,len(lista_candidatas)-1))
     palabraElegida = lista_candidatas[numeroMagico]
@@ -96,8 +111,6 @@ def diccionario_palabras_repetidas(texto):
         diccionario_palabra: diccionario que almacena como clave la palabra sin repetir y como valor las veces que se repite en todo el texto
     Precondiciones:
     """
-    #diccionario_palabra -> almacenará como 'clave' cada palabra sin repetirse y como 'valor' la cantidad de veces que se repite la clave en todo el texto sin caracteres especiales
-    #contador_palabra -> contará la cantidad de veces que se repite la palabra en el texto sin caracteres especiales
     diccionario_palabra = {}
     contador_palabra = 0
     for palabra_filtrador in lista_filtrada_mayores_5:
@@ -107,9 +120,6 @@ def diccionario_palabras_repetidas(texto):
 
 """print(diccionario_palabras_repetidas(lista_filtrada_solo_alfabeticos))"""
 
-diccionario_usar = diccionario_palabras_repetidas(lista_filtrada_solo_alfabeticos)
-
-# ----------------------------------------------- ETAPA 3 -------------------------------------- #
 
 def validez_longitud():
     """
@@ -125,54 +135,6 @@ def validez_longitud():
     while longitud == str(0) or not longitud.isnumeric():
         longitud = input("Error. Ingrese longitud de la palabra que desea adivinar: ")
     return longitud
-
-
-# longitud_palabra= validez_longitud()
-
-def lista_candidatas(diccionario,longitud,longitud_minima):
-    """
-    Función:
-        lista_candidatas
-    Parámetros:
-        diccionario: Usamos la clave del diccionario que creamos con la cant. veces que se repite la palabra
-        longitud: Usamos de referencia para filtrar la lista con palabras que tengan esa longitud
-    Salidas:
-        lista_candidatas: Almacena las posibles palabras que vayan a entrar al juego
-    Precondiciones:
-    """
-    lista_candidatas = []
-    if longitud >= longitud_minima :
-        #Asumiendo que el jugador ingresa alguna longitud  
-        for clave in diccionario:
-            if len(clave) == longitud:
-                lista_candidatas.append(clave)
-    else:
-        #Si no ingresa una longitud o ingresa "cero", juegan todas las palabras
-        for clave in diccionario:
-            lista_candidatas.append(clave)
-    return lista_candidatas
-
-"""print(lista_candidatas(diccionario_usar,longitud_palabra))"""
-
-# palabras_candidatas = lista_candidatas(diccionario_usar,longitud_palabra,longitud_minima)
-
-def palabra_aleatoria(lista_candidatas):
-    """
-    Función:
-        palabra_aleatoria
-    Parámetros:
-        lista_candidatas: Almacena las posibles palabras que vayan a entrar al juego
-    Salidas:
-        palabraSeleccionada: Elige una palabra al azar haciendo uso de la librería random
-    Precondiciones:
-    """
-    palabraSeleccionada = lista_candidatas[randint(1,len(lista_candidatas)-1)]
-    return palabraSeleccionada
-
-# palabra_a_adivinar = palabra_aleatoria(palabras_candidatas)
-"""print(f"Palabra elegida: {palabra_aleatoria(palabras_candidatas)}")"""
-
-# ------------------------------------------- ETAPA 1 ----------------------------------------- #
 
 def ingresoLetra(letrasBuenas, letrasMalas):
     """
@@ -471,7 +433,7 @@ def jugar():
         sigueJugando = salidaLetra[1]
         letra = salidaLetra[0] 
 
-        if sigueJugando: #tiene que evaluar si es letra buena o si es letra mala
+        if sigueJugando:
 
             esBuena = letraBuena(letra, palabraElegida)
 
