@@ -71,7 +71,7 @@ def diccionarValido():
 
 def eligePorCantidad(longitud_Caracteres, lista_diccionario):
     lista_candidatas = []
-    if longitud_Caracteres >= longitud_minima:
+    if int(longitud_Caracteres) >= longitud_minima:
         for i in range (len(lista_diccionario)):
             if len(lista_diccionario[i]) == longitud_Caracteres:
                 lista_candidatas.append(lista_diccionario[i])
@@ -109,7 +109,7 @@ def diccionario_palabras_repetidas(texto):
 
 diccionario_usar = diccionario_palabras_repetidas(lista_filtrada_solo_alfabeticos)
 
-# ------------------------------------------------- ETAPA 3 -------------------------------------- #
+# ----------------------------------------------- ETAPA 3 -------------------------------------- #
 
 def validez_longitud():
     """
@@ -121,10 +121,9 @@ def validez_longitud():
         longitud: longitud que usaremos para filtrar el diccionario con las posibles palabras
     Precondiciones:
     """
-def validez_longitud():
-    longitud = int(input("Ingrese longitud de la palabra que desea adivinar: "))
-    while longitud == 0:
-        longitud = int(input("Error. Ingrese longitud de la palabra que desea adivinar: "))
+    longitud = input("Ingrese longitud de la palabra que desea adivinar: ")
+    while longitud == str(0) or not longitud.isnumeric():
+        longitud = input("Error. Ingrese longitud de la palabra que desea adivinar: ")
     return longitud
 
 
@@ -458,7 +457,7 @@ def jugar():
     puntos_por_desaciertos = -5
     total_puntajes_ganados = 0
     total_puntajes_perdidos = 0
-    longitud = validez_longitud()
+    longitud = int(validez_longitud())
     lista_diccionario = diccionarValido()
     lista_Igualdad_Caracteres = eligePorCantidad(longitud, lista_diccionario)
     palabraElegida = randomPalabraElegida(lista_Igualdad_Caracteres)
