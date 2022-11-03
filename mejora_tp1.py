@@ -11,12 +11,12 @@ El valor del dólar blue tiene una diferencia sustancial con el dólar oficial, 
 longitud_minima = 5
 
 def obtener_texto(texto_usar):
-
     texto_usar =  texto_usar.replace("á","a").replace("é","e").replace("í","i").replace("ó","o").replace("ú","u").replace("ñ","n").replace("ü","u").replace("Á","A").replace("É","E").replace("Í","I").replace("Ó","O").replace("Ú","U").replace("Ñ","N").replace("Ü","U").casefold()
     lista_texto = texto_usar.split()
     return lista_texto
 
 texto = obtener_texto(texto_usar)
+
 
 def eliminar_caracteres(lista_texto):
     """ 
@@ -61,6 +61,31 @@ def filtrador_palabra(lista):
 
 lista_filtrada_mayores_5 = filtrador_palabra(lista_filtrada_solo_alfabeticos)
 
+def diccionarValido():
+    texto = obtener_texto(texto_usar)
+    lista_filtrada = eliminar_caracteres(texto)
+    lista_caracteres_mayor_5 = filtrador_palabra(lista_filtrada)
+    # print(lista_caracteres_mayor_5)
+
+    return lista_caracteres_mayor_5
+
+def eligePorCantidad(longitud_Caracteres, lista_diccionario):
+    lista_candidatas = []
+    if longitud_Caracteres >= longitud_minima:
+        for i in range (len(lista_diccionario)):
+            if len(lista_diccionario[i]) == longitud_Caracteres:
+                lista_candidatas.append(lista_diccionario[i])
+    else:
+        for i in range(len(lista_diccionario)):
+            lista_candidatas.append(lista_diccionario[i])
+    return lista_candidatas
+
+def randomPalabraElegida(lista_candidatas):
+    from random import randint
+    numeroMagico = int(randint(0,len(lista_candidatas)-1))
+    palabraElegida = lista_candidatas[numeroMagico]
+    return palabraElegida
+
 def diccionario_palabras_repetidas(texto):
     """
     Función:
@@ -86,7 +111,7 @@ diccionario_usar = diccionario_palabras_repetidas(lista_filtrada_solo_alfabetico
 
 # ------------------------------------------------- ETAPA 3 -------------------------------------- #
 
-def validez_longitud(longitud):
+def validez_longitud():
     """
     Función:
         validez_longitud
@@ -96,12 +121,14 @@ def validez_longitud(longitud):
         longitud: longitud que usaremos para filtrar el diccionario con las posibles palabras
     Precondiciones:
     """
+def validez_longitud():
     longitud = int(input("Ingrese longitud de la palabra que desea adivinar: "))
     while longitud == 0:
         longitud = int(input("Error. Ingrese longitud de la palabra que desea adivinar: "))
     return longitud
 
-longitud_palabra= validez_longitud(longitud_minima)
+
+# longitud_palabra= validez_longitud()
 
 def lista_candidatas(diccionario,longitud,longitud_minima):
     """
@@ -128,7 +155,7 @@ def lista_candidatas(diccionario,longitud,longitud_minima):
 
 """print(lista_candidatas(diccionario_usar,longitud_palabra))"""
 
-palabras_candidatas = lista_candidatas(diccionario_usar,longitud_palabra,longitud_minima)
+# palabras_candidatas = lista_candidatas(diccionario_usar,longitud_palabra,longitud_minima)
 
 def palabra_aleatoria(lista_candidatas):
     """
@@ -143,7 +170,7 @@ def palabra_aleatoria(lista_candidatas):
     palabraSeleccionada = lista_candidatas[randint(1,len(lista_candidatas)-1)]
     return palabraSeleccionada
 
-palabra_a_adivinar = palabra_aleatoria(palabras_candidatas)
+# palabra_a_adivinar = palabra_aleatoria(palabras_candidatas)
 """print(f"Palabra elegida: {palabra_aleatoria(palabras_candidatas)}")"""
 
 # ------------------------------------------- ETAPA 1 ----------------------------------------- #
@@ -372,11 +399,11 @@ def ganaPierdo(muestraParcial, palabraAhorcado, contadorErrores,puntaje):
     """
     if muestraParcial == palabraAhorcado:
         contadorErrores = 9
-        print(f"\nHAS GANADO! SU PUNTAJE FINAL ES: {puntaje}\n")
-        nueva_partida(puntaje)
+        print(f"\nHAS GANADO! SU PUNTAJE ES: {puntaje}\n")
+        # nueva_partida(puntaje)
     elif contadorErrores == 8:
-        print(f"\nPERDISTE! SU PUNTAJE FINAL ES: {puntaje}\nPalabra a adivinar era: {palabraAhorcado}\n")
-        nueva_partida(puntaje)
+        print(f"\nPERDISTE! SU PUNTAJE ES: {puntaje}\nPalabra a adivinar era: {palabraAhorcado}\n")
+        # nueva_partida(puntaje)
     else:
         pass
     return contadorErrores
@@ -393,7 +420,7 @@ def Asignacion_Puntajes(tot_ganados,tot_perdidos):
     """
     return tot_ganados + tot_perdidos
 
-def nueva_partida(puntaje_anterior):
+def nueva_partida():
     """
     Función: nueva_partida
     Parámetros:
@@ -401,14 +428,24 @@ def nueva_partida(puntaje_anterior):
     Salidas:
         tot: Acumula el puntaje de todas las partidas jugadas
     """
-    consulta_nueva_partida = input("Desea jugar una nueva partida? (s/n): ")
-    puntaje_nuevo = 0
-    while consulta_nueva_partida == 's' or consulta_nueva_partida!= 'n':
-        jugar()
-        puntaje_nuevo = jugar()
-        tot = puntaje_anterior + puntaje_nuevo
-    tot = puntaje_anterior + puntaje_nuevo
-    return tot
+    consulta_nueva_partida = ""
+
+    total = jugar()
+
+    variable_de_control = 1
+    while variable_de_control != 0:
+        consulta_nueva_partida = input("Desea jugar una nueva partida? (s/n): ")
+
+        if consulta_nueva_partida == "s": 
+            puntaje_nuevo = jugar()
+            total += puntaje_nuevo
+            print(f"\nEL TOTAL DE LAS PARTIDAS JUGADAS {total}\n")
+        else:    
+            print(f"\nEL TOTAL DE LAS PARTIDAS JUGADAS {total}")
+            variable_de_control = 0
+    
+    return None
+
 
 def jugar():
     errores = 0
@@ -421,7 +458,10 @@ def jugar():
     puntos_por_desaciertos = -5
     total_puntajes_ganados = 0
     total_puntajes_perdidos = 0
-    palabraElegida = palabra_a_adivinar
+    longitud = validez_longitud()
+    lista_diccionario = diccionarValido()
+    lista_Igualdad_Caracteres = eligePorCantidad(longitud, lista_diccionario)
+    palabraElegida = randomPalabraElegida(lista_Igualdad_Caracteres)
     puntaje = Asignacion_Puntajes( total_puntajes_ganados, total_puntajes_perdidos)
     muestraParcial = muestraPalabraEncriptada(letrasBuenas, palabraElegida)
 
@@ -455,11 +495,13 @@ def jugar():
                 printeoAciertoError(letra, muestraParcial, aciertos, errores, palabraElegida, letrasMalas)
                 contador = ganaPierdo(muestraParcial, palabraElegida, errores,puntaje)
             else:
-                print("Letra repetida")
+                print("LETRA REPETIDA")
         else:
             contador = 10
-            print("Has salido")
+            print("\nJUEGO FINALIZADO\n")
+
 
     return puntaje
 
-jugar()
+
+nueva_partida()
