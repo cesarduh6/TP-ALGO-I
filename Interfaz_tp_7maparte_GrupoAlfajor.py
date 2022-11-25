@@ -3,7 +3,7 @@ from tkinter import *
 from tkinter import messagebox
 
 
-def creacion_ventana_de_inicio():
+def crear_ventana_de_inicio():
     #Esta funcion crea la ventana principal(la gris oscura)
     global ventana_principal
     ventana_principal=Tk()
@@ -44,11 +44,11 @@ def creacion_ventana_de_inicio():
     boton_ingresar.pack()
     boton_ingresar.place(x=30,y=140)
     #Boton Iniciar partida
-    boton_iniciar_partida = Button(ventana_principal,text="Iniciar partida")
+    boton_iniciar_partida = Button(ventana_principal,text="Iniciar partida",command=jugar)
     boton_iniciar_partida.pack()
     boton_iniciar_partida.place(x=90,y=140)
     #Boton Registrarse
-    boton_registrarse = Button(ventana_principal,text="Registrarse",command = registro_de_jugador)
+    boton_registrarse = Button(ventana_principal,text="Registrarse",command = registrar_jugador)
     boton_registrarse.pack()
     boton_registrarse.place(x=180,y=140)
 
@@ -56,7 +56,7 @@ def creacion_ventana_de_inicio():
 
     
 
-def registro_de_jugador():
+def registrar_jugador():
     #Esta funcion crea la ventana registro de jugador
     global ventana_registro
     ventana_registro = Toplevel(ventana_principal)
@@ -125,16 +125,19 @@ def validar_nombre_jugador_nuevo():
     guion=False
     letra=False
     numero=False
+    simbolo_invalido=False
     if longitud_minima <= len(info_nombre_usuario_nuevo) <= longitud_maxima:
-        while(posicion < len(info_nombre_usuario_nuevo)):
+        while(posicion < len(info_nombre_usuario_nuevo) and not simbolo_invalido):
             if (info_nombre_usuario_nuevo[posicion] == "_"):
                 guion=True
             elif (info_nombre_usuario_nuevo[posicion].isalpha()):
                 letra=True
             elif (info_nombre_usuario_nuevo[posicion].isnumeric()):
                 numero=True
+            else:
+                simbolo_invalido=True
             posicion = posicion + 1
-    return guion and letra and numero
+    return guion and letra and numero and not simbolo_invalido
     
 
 
@@ -266,7 +269,7 @@ def ingresar_usuarios_a_la_sala_de_juego(nombre_jugador):
             linea = file.readline()
             if contador == 5:
                 messagebox.showinfo(message="Recuerde que solo se permite el ingreso de hasta 4 jugadores")
-                usuario(state=DISABLED)
+                
     
 
 
@@ -289,10 +292,10 @@ def registro_usuarios_nuevos(datos_nombre_usuario_nuevo,datos_clave_usuario_nuev
     with open("registracion.csv","a",newline="") as file:
         writer=csv.writer(file,delimiter=",")
         writer.writerow(datos_usuario_nuevo)
-    Label(ventana_registro, text="Registro completado con éxito", fg="green", font=("calibri", 11)).pack()
+    messagebox.showinfo(message="Registro completado con exito")
     entrada_nombre_usuario_nuevo.delete(0,END)
     entrada_clave_nueva.delete(0,END)
     entrada_clave_nueva_otra_vez.delete(0,END)
 
-print(creacion_ventana_de_inicio())
+print(crear_ventana_de_inicio())
 
