@@ -44,7 +44,7 @@ def crear_ventana_de_inicio():
     boton_ingresar.pack()
     boton_ingresar.place(x=30,y=140)
     #Boton Iniciar partida
-    boton_iniciar_partida = Button(ventana_principal,text="Iniciar partida",command=jugar)
+    boton_iniciar_partida = Button(ventana_principal,text="Iniciar partida",command=asignar_turnos_a_todos_los_jugadores)
     boton_iniciar_partida.pack()
     boton_iniciar_partida.place(x=90,y=140)
     #Boton Registrarse
@@ -55,7 +55,6 @@ def crear_ventana_de_inicio():
     ventana_principal.mainloop()
 
     
-
 def registrar_jugador():
     #Esta funcion crea la ventana registro de jugador
     global ventana_registro
@@ -115,7 +114,6 @@ def registrar_jugador():
     boton_usuario_nuevo.place(x=100,y=250)
 
 
-
 def validar_nombre_jugador_nuevo():
     #Esta funcion valida el nombre del usuario nuevo que quiere registrase(si tiene entre 4 o 15 caracteres,si tiene guion,letra y nuemro)
     info_nombre_usuario_nuevo=nombre_usuario_new.get()
@@ -140,8 +138,6 @@ def validar_nombre_jugador_nuevo():
     return guion and letra and numero and not simbolo_invalido
     
 
-
-        
 def validar_clave_de_jugador_nuevo():
     #Esta funcion valida la clave nueva del usuario nuevo(si tiene mayus,munus,numero,simbolo valido y no simbolos invalidos)
     info_clave_usuario_nuevo=str(clave_new.get())
@@ -167,7 +163,6 @@ def validar_clave_de_jugador_nuevo():
                 tiene_simbolo_invalido = True
             posicion = posicion + 1
     return hay_mayuscula and hay_minuscula and tiene_digito and tiene_simbolo_valido and not tiene_simbolo_invalido
-
 
 
 def validar_entrada_nombre_usuario_nuevo():
@@ -196,7 +191,6 @@ def validar_entrada_nombre_usuario_nuevo():
     else:
         messagebox.showerror(message="El nombre no puede estar en blanco")
         
-            
         
 def validar_entrada_clave_nueva():
     validacion_entrada_clave_usuario_nuevo_valido=validar_clave_de_jugador_nuevo()
@@ -210,10 +204,6 @@ def validar_entrada_clave_nueva():
     else:
         messagebox.showerror(message="La clave no puede estar en blanco")
            
-
-
-    
-
 
 def validar_usuario_nombre_y_clave_registrado():
     #Esta funcion valida en la ventana principal si el usuario pone el nombre y clave correctos(si ya esta registardo),abriendo el archivo registracion.csv y leyendolo
@@ -252,29 +242,55 @@ def validar_usuario_nombre_y_clave_registrado():
     entrada_clave.delete(0,END)
 
 
-
-
-
 def ingresar_usuarios_a_la_sala_de_juego(nombre_jugador):
     #Esta funcion (cuando todo esta bien validado) guarda el nombre del usuario en un archivo csv y a mediada que ingresan mas jugadores se sigue guardando
     lista_jugador=[nombre_jugador]
     with open("Ingresos.csv","a",newline="") as file:
         writer=csv.writer(file,delimiter=",")
         writer.writerow(lista_jugador)
-    contador=0
+    contador_jugadores=0
     with open("Ingresos.csv", "r",newline="") as file:
         linea = file.readline()
         while linea != '':
-            contador=contador + 1
+            contador_jugadores=contador_jugadores + 1
             linea = file.readline()
-            if contador == 5:
+            if contador_jugadores == 4:
+                #muestra un mensaje que hasta 4 personas puede ingresar a la sala de juego
                 messagebox.showinfo(message="Recuerde que solo se permite el ingreso de hasta 4 jugadores")
                 
+def contar_jugadores():
+    #Cuenta la cantidad de jugadores que ingresaron a la sala de juego una vez que se presiono el boton iniciar partida
+    contador_jugadores=0
+    with open("Ingresos.csv", "r",newline="") as file:
+        linea = file.readline()
+        while linea != "":
+            contador_jugadores=contador_jugadores+ 1
+            linea = file.readline()
+    return(contador_jugadores)
+
+
+def asignar_turnos_a_todos_los_jugadores():
+    #Devuelve un diccionario con clave el nombre de los jugadores y el valor es el turno aleatorio y unico que lo toco a cada uno una vez que se toque el boton iniciar partida
+    cantidad_jugadores=contar_jugadores()
+    lista_de_turnos=range(1,cantidad_jugadores + 1)
+    lista_para_obtener_nombres_de_jugadores=[]
+    diccionario_jugadores_con_turnos_y_palabras_magicas_asignadas={}
+    import random 
+    lista_aleatorios_unicos=random.sample(lista_de_turnos,len(lista_de_turnos))
+    with open("Ingresos.csv", "r",newline="") as file:
+        linea = file.readline()
+        while linea != "":
+            nombre_jugador_1=str(linea.rstrip())
+            lista_para_obtener_nombres_de_jugadores.append(nombre_jugador_1)
+            linea = file.readline()
+    diccionario_jugadores_con_turnos_y_palabras_magicas_asignadas=dict(zip(lista_para_obtener_nombres_de_jugadores, lista_aleatorios_unicos))
+    for clave in diccionario_jugadores_con_turnos_y_palabras_magicas_asignadas:
+        print(f"El jugador {clave} tiene turno numero {diccionario_jugadores_con_turnos_y_palabras_magicas_asignadas[clave]}")
+    print("A jugar!")
+    return diccionario_jugadores_con_turnos_y_palabras_magicas_asignadas
+    #Aca se importaria lo de la parte del tp 1 e inmediatamente abajo de esto llamamos a la funcion jugar
+                
     
-
-
-
-
 def validar_entradas_claves_nuevas():
     #Esta funcion valida en la venta de registro de jugador si la clave ingresada(validada anteriormente) y la misma clave ingresada otra vez es igual 
     info_clave_usuario_nuevo=str(clave_new.get())
@@ -284,7 +300,6 @@ def validar_entradas_claves_nuevas():
         entrada_clave_nueva_otra_vez.delete(0,END)
     else:
         messagebox.showinfo(message="Las claves coinciden,continue")
-
 
 def registro_usuarios_nuevos(datos_nombre_usuario_nuevo,datos_clave_usuario_nuevo):
     #Esta funcion (cuando todo esta bien validado) guarda los datos del usuario nuevo en un archivo llamado registracion.csv e imprime arriba "registro completado con exito"
