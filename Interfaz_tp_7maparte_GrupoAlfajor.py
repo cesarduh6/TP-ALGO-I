@@ -10,7 +10,7 @@ def crear_ventana_de_inicio():
     ventana_principal.title("Login Alfajor")
     ventana_principal.resizable(0,0)
     ventana_principal.geometry("280x180")
-    ventana_principal.iconbitmap("descarga.ico")
+    ventana_principal.iconbitmap("Ahorcado 1.ico")
     ventana_principal.config(background="gray")
     global usuario
     global clave
@@ -61,6 +61,7 @@ def registrar_jugador():
     ventana_registro = Toplevel(ventana_principal)
     ventana_registro.title("Registro")
     ventana_registro.geometry("300x280")
+    ventana_registro.iconbitmap("Ahorcado 1.ico")
     global nombre_usuario_new
     global clave_new
     global clave_new_bis
